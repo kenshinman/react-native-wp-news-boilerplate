@@ -20,6 +20,15 @@ class CardListItem extends Component {
     super(props);
     this.state = {};
   }
+
+  secureImg(url) {
+    if (url.includes("https://")) {
+      return url;
+    } else {
+      return url.replace(/http/, "https");
+    }
+  }
+
   render() {
     const {
       title,
@@ -57,7 +66,7 @@ class CardListItem extends Component {
           </CardItem>
           <CardItem cardBody>
             <ImageBackground
-              source={{ uri: x_featured_media_medium }}
+              source={{ uri: this.secureImg(x_featured_media_medium) }}
               style={{ height: 200, width: null, flex: 1 }}>
               {/* <Text>{title.rendered}</Text> */}
             </ImageBackground>

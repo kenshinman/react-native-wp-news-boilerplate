@@ -8,7 +8,8 @@ import {
   Dimensions,
   RefreshControl,
   Linking,
-  ActivityIndicator
+  ActivityIndicator,
+  Platform
 } from "react-native";
 import { connect } from "react-redux";
 import Share from "react-native-share";
@@ -78,6 +79,14 @@ class Details extends Component {
     }
   }
 
+  secureImg(url) {
+    if (url.includes("https://")) {
+      return url;
+    } else {
+      return url.replace(/http/, "https");
+    }
+  }
+
   render() {
     console.log(this.props.navigation.getParam("slug", {}));
     const {
@@ -110,8 +119,14 @@ class Details extends Component {
             // tagsStyles={{}}
           />
           <Image
-            source={{ uri: x_featured_media_medium }}
-            style={{ height: 280, width: null }}
+            source={{ uri: this.secureImg(x_featured_media_medium) }}
+            style={{
+              height: 280,
+              width:
+                Platform.OS === "android"
+                  ? null
+                  : Dimensions.get("window").width
+            }}
           />
           <Text note style={{ marginVertical: 20 }}>
             <Icon name="time" style={{ fontSize: 14 }} />{" "}
@@ -124,7 +139,7 @@ class Details extends Component {
             imagesMaxWidth={Dimensions.get("window").width}
             tagsStyles={{
               p: {
-                color: "#333",
+                // color: "#333",
                 fontSize: 16,
                 lineHeight: 20,
                 marginBottom: 20
@@ -132,7 +147,10 @@ class Details extends Component {
               body: { paddingLeft: 40 }
             }}
             onLinkPress={(e, href, obj) => {
-              if (href.includes("http://punchng.com")) {
+              if (
+                href.includes("http://punchng.com") ||
+                href.includes("https://punchng.com")
+              ) {
                 const url = href.split("http://punchng.com");
                 const newUrl = url[1].replace(/\//g, "");
                 Linking.openURL(`topnews://topnews/post/${newUrl}`);
