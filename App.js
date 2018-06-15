@@ -28,7 +28,7 @@ export default class App extends Component {
   }
   handleOpenURL(event) {
     console.log(event.url);
-    const route = e.url.replace(/.*?:\/\//g, "");
+    const route = event.url.replace(/.*?:\/\//g, "");
     // do something with the url, in our case navigate(route)
   }
 
