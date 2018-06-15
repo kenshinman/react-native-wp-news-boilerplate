@@ -16,7 +16,14 @@ class HomePage extends Component {
   }
 
   static navigationOptions = {
-    title: "Top News"
+    title: "Top News",
+    // headerStyle: {
+    //   backgroundColor: "#3498db"
+    // },
+    // headerTintColor: "#fff",
+    headerTitleStyle: {
+      fontWeight: "bold"
+    }
   };
 
   renderPosts() {
