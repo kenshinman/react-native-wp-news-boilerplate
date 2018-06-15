@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { StyleSheet, ActivityIndicator, View } from "react-native";
+import { StyleSheet, ActivityIndicator, View, Text } from "react-native";
+// import { Button, Icon } from "native-base";
 import { connect } from "react-redux";
-import { Container, Content } from "native-base";
+import { Container, Content, Icon, Button } from "native-base";
 import { fetchPosts } from "../../actions/postsActions";
 import CardListItem from "../components/common/CardListItem";
 
@@ -17,13 +18,22 @@ class HomePage extends Component {
 
   static navigationOptions = {
     title: "Top News",
-    // headerStyle: {
-    //   backgroundColor: "#3498db"
-    // },
-    // headerTintColor: "#fff",
-    headerTitleStyle: {
-      fontWeight: "bold"
-    }
+    headerRight: (
+      <Button
+        style={{ marginTop: 5 }}
+        transparent
+        onPress={() => alert("more")}>
+        <Icon name="more" style={{ color: "#fff" }} />
+      </Button>
+    ),
+    headerLeft: (
+      <Button
+        onPress={() => alert("menu")}
+        style={{ marginTop: 5 }}
+        transparent>
+        <Icon name="menu" style={{ color: "#fff" }} />
+      </Button>
+    )
   };
 
   renderPosts() {
