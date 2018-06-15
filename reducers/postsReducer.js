@@ -1,8 +1,14 @@
-import { FETCHING_POSTS, SET_POSTS } from "../actions/postsActions";
+import {
+  FETCHING_POSTS,
+  SET_POSTS,
+  FETCHING_MORE_POSTS,
+  SET_MORE_POSTS
+} from "../actions/postsActions";
 
 const initialState = {
   posts: [],
-  fetchingPosts: false
+  fetchingPosts: false,
+  fetchingMorePosts: false
 };
 
 export default function(state = initialState, action) {
@@ -12,8 +18,23 @@ export default function(state = initialState, action) {
         ...state,
         fetchingPosts: true
       };
+    case FETCHING_MORE_POSTS:
+      return {
+        ...state,
+        fetchingMorePosts: true
+      };
     case SET_POSTS:
-      return { ...state, posts: action.payload, fetchingPosts: false };
+      return {
+        ...state,
+        posts: action.payload,
+        fetchingPosts: false
+      };
+    case SET_MORE_POSTS:
+      return {
+        ...state,
+        posts: [...state.posts, ...action.payload],
+        fetchingMorePosts: false
+      };
     default:
       return state;
   }

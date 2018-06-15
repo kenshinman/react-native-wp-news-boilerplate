@@ -4424,6 +4424,10 @@ react-native-easy-grid@0.1.17:
   dependencies:
     lodash "^4.11.1"
 
+react-native-infinite-scroll@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/react-native-infinite-scroll/-/react-native-infinite-scroll-1.0.6.tgz#d29ca2bee421469e209bcba05a6a21a0458e4a49"
+
 react-native-iphone-x-helper@^1.0.1:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.0.3.tgz#7a2f1e0574e899a0f1d426e6167fd98990083214"
