@@ -2,38 +2,30 @@ import React, { Component } from "react";
 import { StyleSheet, ActivityIndicator, View, Text } from "react-native";
 // import { Button, Icon } from "native-base";
 import { connect } from "react-redux";
-import { Container, Content, Icon, Button } from "native-base";
-import { fetchPosts } from "../../actions/postsActions";
+import { Container, Content } from "native-base";
+import { fetchPosts, fetchMorePosts } from "../../actions/postsActions";
 import CardListItem from "../components/common/CardListItem";
+import InfiniteScroll from "react-native-infinite-scroll";
+import HTML from "react-native-render-html";
 
 class HomePage extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      page: 1,
+      per_page: 20
+    };
   }
 
   componentWillMount() {
-    this.props.fetchPosts();
+    this.props.fetchPosts(this.state.page, this.state.per_page);
   }
 
   static navigationOptions = {
     title: "Top News",
-    headerRight: (
-      <Button
-        style={{ marginTop: 5 }}
-        transparent
-        onPress={() => alert("more")}>
-        <Icon name="more" style={{ color: "#fff" }} />
-      </Button>
-    ),
-    headerLeft: (
-      <Button
-        onPress={() => alert("menu")}
-        style={{ marginTop: 5 }}
-        transparent>
-        <Icon name="menu" style={{ color: "#fff" }} />
-      </Button>
-    )
+    headerTitleStyle: {
+      fontWeight: "bold"
+    }
   };
 
   renderPosts() {
@@ -48,6 +40,12 @@ class HomePage extends Component {
     });
   }
 
+  loadMoreData() {
+    this.setState({ page: this.state.page + 1 }, () => {
+      this.props.fetchMorePosts(this.state.page, this.state.per_page);
+    });
+  }
+
   render() {
     if (this.props.posts.fetchingPosts) {
       return (
@@ -59,7 +57,17 @@ class HomePage extends Component {
     }
     return (
       <Container>
-        <Content style={styles.container}>{this.renderPosts()}</Content>
+        <InfiniteScroll
+          horizontal={false} //true - if you want in horizontal
+          onLoadMoreAsync={this.loadMoreData.bind(this)}
+          distanceFromEnd={10} // distance in density-independent pixels from the right end
+        >
+          {this.renderPosts()}
+          {this.props.posts.fetchingMorePosts && (
+            <ActivityIndicator size="large" />
+          )}
+          <View style={{ marginHorizontal: 25, width: null, height: 10 }} />
+        </InfiniteScroll>
       </Container>
     );
   }
@@ -78,5 +86,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { fetchPosts }
+  { fetchPosts, fetchMorePosts }
 )(HomePage);
