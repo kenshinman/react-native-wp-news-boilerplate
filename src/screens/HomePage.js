@@ -83,7 +83,7 @@ class HomePage extends Component {
     }
     return (
       <Container>
-        <ScrollView
+        <InfiniteScroll
           refreshControl={
             <RefreshControl
               onRefresh={() =>
@@ -91,24 +91,18 @@ class HomePage extends Component {
               }
               refreshing={this.state.refreshing}
             />
-          }>
-          <InfiniteScroll
-            horizontal={false} //true - if you want in horizontal
-            onLoadMoreAsync={this.loadMoreData.bind(this)}
-            distanceFromEnd={10} // distance in density-independent pixels from the right end
-            refreshControl={
-              <RefreshControl
-                onRefresh={() => alert("oi")}
-                refreshing={this.state.refreshing}
-              />
-            }>
-            {this.renderPosts()}
-            {this.props.posts.fetchingMorePosts && (
-              <ActivityIndicator size="large" />
-            )}
-            <View style={{ marginHorizontal: 25, width: null, height: 10 }} />
-          </InfiniteScroll>
-        </ScrollView>
+          }
+          horizontal={false} //true - if you want in horizontal
+          onLoadMoreAsync={this.loadMoreData.bind(this)}
+          distanceFromEnd={10} // distance in density-independent pixels from the right end
+        >
+          {this.renderPosts()}
+          {this.props.posts.fetchingMorePosts && (
+            <ActivityIndicator size="large" />
+          )}
+          <View style={{ marginHorizontal: 25, width: null, height: 10 }} />
+        </InfiniteScroll>
+        {/* </ScrollView> */}
       </Container>
     );
   }

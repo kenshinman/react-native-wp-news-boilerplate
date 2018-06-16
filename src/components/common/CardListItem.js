@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { ImageBackground, TouchableOpacity } from "react-native";
+import { ImageBackground, TouchableWithoutFeedback } from "react-native";
 import moment from "moment";
 import HTML from "react-native-render-html";
 import {
@@ -22,6 +22,7 @@ class CardListItem extends Component {
   }
 
   secureImg(url) {
+    if (!url) return null;
     if (url.includes("https://")) {
       return url;
     } else {
@@ -38,7 +39,7 @@ class CardListItem extends Component {
     } = this.props.post;
     const h_title = `<h3>${title.rendered}</h3>`;
     return (
-      <TouchableOpacity
+      <TouchableWithoutFeedback
         onPress={() =>
           this.props.navigate("Details", {
             post: this.props.post,
@@ -89,7 +90,7 @@ class CardListItem extends Component {
             </Right>
           </CardItem>
         </Card>
-      </TouchableOpacity>
+      </TouchableWithoutFeedback>
     );
   }
 }
